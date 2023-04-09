@@ -149,7 +149,6 @@ def hand2Graph(hand_result, scale = 100):
     
     
     '''
-    '''
     #full connection to root and between tips
     struct_dict = {0:{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20},
                    1:{2},
@@ -221,7 +220,7 @@ def hand2Graph(hand_result, scale = 100):
                    
                    20:{0}
                    }
-    '''
+    
     #only root and between tips + thumb and all (accurate for all except between 7 and 6)
     struct_dict = {4:{0,8,12,16,20},
                    
@@ -241,18 +240,16 @@ def hand2Graph(hand_result, scale = 100):
     
     reference_vector = np.array([landmarks[5].x,landmarks[5].y,landmarks[5].z])-np.array([landmarks[0].x,landmarks[0].y,landmarks[0].z])
     size_factor = np.linalg.norm(reference_vector)
-    #size_factor=1
+    
     
     for origin in struct_dict:
         or_landmark = landmarks[origin]
         or_ary = np.array([or_landmark.x,or_landmark.y,or_landmark.z])*scale/size_factor
-        #or_ary = np.array([or_landmark.x,or_landmark.y,or_landmark.z])
         for target in struct_dict[origin]:
             tar_landmark = landmarks[target]
             tar_ary = np.array([tar_landmark.x,tar_landmark.y,tar_landmark.z])*scale/size_factor
-            #tar_ary = np.array([tar_landmark.x,tar_landmark.y,tar_landmark.z])
             #weight is the magnitude of the vector(obtained by subtracting the two positional vectors)
-            '''
+            
             #incoporating the angle into the calculation is not ideal
             a,b = reference_vector,tar_ary-or_ary
             dot_product = np.dot(a,b)
@@ -264,10 +261,9 @@ def hand2Graph(hand_result, scale = 100):
                 angle = 1
             
             angle = 1
-            '''
+            ''''''
             
-            #adjecentcy_list.append((origin,target,np.linalg.norm(tar_ary-or_ary)*angle))
-            adjecentcy_list.append((origin,target,np.linalg.norm(tar_ary-or_ary)))
+            adjecentcy_list.append((origin,target,np.linalg.norm(tar_ary-or_ary)*angle))
     '''
     for origin in range(21):
        or_landmark = landmarks[origin]
@@ -359,11 +355,11 @@ while True:
             #min(sim_comp,key=lambda x:x[1])[0]
             print(sim_comp)
             
-            cv2.putText(img,str(min(sim_comp,key=lambda x:x[1])), tuple(palm_location), cv2.FONT_HERSHEY_PLAIN, 3, (0,255,0),2)
+            cv2.putText(img,str(min(sim_comp,key=lambda x:x[1])), tuple(palm_location), cv2.FONT_HERSHEY_PLAIN, 3, (255,255,255),1)
             
     
     
-    cv2.putText(img,str(fps), (50,50), cv2.FONT_HERSHEY_PLAIN, 3, (0,255,0),2)
+    cv2.putText(img,str(fps), (50,50), cv2.FONT_HERSHEY_PLAIN, 3, (255,255,255),2)
     
     
     
